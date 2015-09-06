@@ -33,7 +33,35 @@ class Provider extends Object implements \DevGroup\Multilingual\GeoProviderInter
         Yii::endProfile('Get remote url');
         Yii::beginProfile('Decode json');
         $json = Json::decode($contents);
+        $json = $this->convertFields($json, [
+            'country' => [
+                'iso' => 'iso_3166_1_alpha_2',
+                'name_en' => 'name',
+            ],
+            'city' => [
+                'name_en' => 'name',
+            ],
+            'region' => [
+                'name_en' => 'name',
+            ],
+        ]);
+
         Yii::endProfile('Decode json');
 	    return new GeoInfo($json);
+    }
+
+    private function convertFields($array=[], $convert=[])
+    {
+        foreach ($convert as $struct => $fields) {
+            if (isset($array[$struct])) {
+                foreach ($fields as $from => $to) {
+                    if (isset($array[$struct][$from])) {
+                        $array[$struct][$to] = $array[$struct][$from];
+                        unset($array[$struct][$from]);
+                    }
+                }
+            }
+        }
+        return $array;
     }
 }
