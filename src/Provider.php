@@ -14,6 +14,26 @@ class Provider extends Object implements \DevGroup\Multilingual\GeoProviderInter
 
     public function getGeoInfo($ip)
     {
-	    return new GeoInfo(Json::decode(file_get_contents('http://'.$this->host.':'.$this->port.'/?ip='.$ip)));
+        $url = 'http://'.$this->host.':'.$this->port.'/?ip='.$ip;
+        Yii::beginProfile('Get remote url');
+        // create curl resource
+        $ch = curl_init();
+
+        // set url
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        // $output contains the output string
+        $contents = curl_exec($ch);
+
+        // close curl resource to free up system resources
+        curl_close($ch);
+        Yii::endProfile('Get remote url');
+        Yii::beginProfile('Decode json');
+        $json = Json::decode($contents);
+        Yii::endProfile('Decode json');
+	    return new GeoInfo($json);
     }
 }
