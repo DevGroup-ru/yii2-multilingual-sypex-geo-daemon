@@ -1,0 +1,23 @@
+{
+    "name": "devgroup/yii2-multilingual-sypexgeodaemon",
+    "description": "Sypex Geo Daemon provider for yii2-multilingual",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","i18n","l10n","language","multilingual","hreflang","yii2-multilingual","sypexgeo"],
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Alexander Kozhevnikov",
+            "email": "b37hr3z3n@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "^2.0.6",
+        "devgroup/yii2-multilingual": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevGroup\\Multilingual\\SypexGeoDaemon": "src/"
+        }
+    }
+}
