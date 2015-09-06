@@ -2,6 +2,7 @@
 
 namespace DevGroup\Multilingual\SypexGeoDaemon;
 
+use DevGroup\Multilingual\GeoInfo;
 use Yii;
 use yii\base\Object;
 use yii\helpers\Json;
@@ -13,6 +14,6 @@ class Provider extends Object implements \DevGroup\Multilingual\GeoProviderInter
 
     public function getGeoInfo($ip)
     {
-	return Json::decode(file_get_contents('http://'.$this->host.':'.$this->port.'/?ip='.$ip));
+	    return new GeoInfo(Json::decode(file_get_contents('http://'.$this->host.':'.$this->port.'/?ip='.$ip)));
     }
 }
