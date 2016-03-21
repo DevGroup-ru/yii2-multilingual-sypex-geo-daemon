@@ -32,7 +32,11 @@ class Provider extends Object implements \DevGroup\Multilingual\GeoProviderInter
         curl_close($ch);
         Yii::endProfile('Get remote url');
         Yii::beginProfile('Decode json');
-        $json = Json::decode($contents);
+        try {
+            $json = Json::decode($contents);
+        } catch (\Exception $e) {
+            $json = [];
+        }
         $json = $this->convertFields($json, [
             'country' => [
                 'iso' => 'iso_3166_1_alpha_2',
